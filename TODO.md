@@ -1,91 +1,73 @@
-- Need to do
-- Maybe?
-- In-progress...
+# TODO
+
+## Status Legend
+
+- [ ] **Planned** — not started
+- [~] **In Progress** — currently being worked on
+- [?] **Investigate** — requires research, design, or a decision
+- [x] **Done** — completed
+- [!] **Blocked** — waiting on a dependency or external information
 
 ---
-### To-Do
-- Engine
-    - Rendering
-        - Libraries/APIs
-            - GL 1.1...
-                - Optional extensions:
-                    - `GL_ARB_multitexture`
-                    - `GL_ARB_texture_border_clamp`
-                        - Fall back to `GL_CLAMP`
-                    - `GL_ARB_vertex_program`
-                    - `GL_ARB_fragment_program`
-            - GL 2.0/GLES 2.0/WebGL 1.0
-            - GL 3.3/GLES 3.0/WebGL 2.0
-            - D3D 7 or 8 \(Windows and XDK\)
-            - D3D 11 \(Windows and GDK\)
-            - XGU or PBKit \(NXDK\)
-            - GSKIT \(PS2\)
-            - PVR \(Dreamcast\)
-                - Convert textures to 16-bit
-                - Do twiddling
-                    - [Ref 1](https://en.wikipedia.org/wiki/Z-order_curve)
-                    - [Ref 2](https://www.redringrico.com/weblog/rendering-things-that-cant-be-rendered-on-a-dreamcast/)
-                    - [Ref 3](https://dreamcast.wiki/Twiddling)
-            - Citro3D \(3DS\)
-            - GX \(GameCube and Wii\)
-            - Software
-        - Maps
-        - Entities and props
-    - Audio
-        - Music
-        - OpenAL support
-        - Hardware acceleration
-            - Four settings
-                - Sound fx: SW, Mixing: SW, Output fx: SW
-                - Sound fx: SW, Mixing: SW, Output fx: HW
-                - Sound fx: SW, Mixing: HW, Output fx: HW
-                - Sound fx: HW, Mixing: HW, Output fx: HW
-            - Dreamcast
-                - [AICA reference](https://segaretro.org/images/d/de/AICA_E.pdf)
-                - [S3M player](https://github.com/Kochise/dreamcast-docs/blob/master/AICA/SRCS/libs3mplay/libs3mplay/s3mplay)
-    - Physics
-    - UI
-    - Input
-        - Touch UI
-    - File I/O
-        - Read PMF compiled maps
-- Server
-    - Networking for remote clients
-    - State sharing for built-in client
-- Editor
-    - Read and write PMP/PMT map projects
-    - Compile PMP/PMT map projects to PMF maps
-    - Decompile PMF to PMP/PMT?
-- Common
-    - Read PAF archive format
-    - Read and write PKD database format
-    - PBASIC scripting...
-- Tools
-    - Blender P3M plugin
-        - Importing
-    - Blockbench P3M plugin?
-    - PTM music tracker
-    - PAF tool
-    - PKD tool
-    - PTF thumbnailer
-        - [Example for KDE](https://invent.kde.org/graphics/kdegraphics-thumbnailers)
 
----
-### Done
-- Engine
-    - Audio
-        - 3D effect
-        - Filters
-        - Reverb
-    - Input
-        - Keyboard and mouse
-        - Controller
-    - File I/O
-        - Read P3M 3D models
-- Tools
-    - Blender P3M plugin
-        - Exporting
-    - GTKSourceView file for PBASIC
-    - PTF tool
-- Common
-    - Logging
+## Engine
+
+### Rendering
+
+#### Rendering Architecture
+- [ ] Define renderer abstraction/API
+- [ ] Define GPU capability detection
+- [ ] Define feature levels and fallback paths
+- [ ] Define shader/material abstraction
+- [ ] Define texture abstraction
+- [ ] Define vertex/index buffer abstraction
+- [ ] Define framebuffer/render-target abstraction
+- [ ] Define render-state abstraction
+- [ ] Define command/submission model
+- [ ] Define software-rendering fallback
+
+#### OpenGL / OpenGL ES / WebGL
+
+- [ ] **OpenGL 1.1**
+  - [ ] Core renderer
+  - [ ] Capability detection
+  - [ ] Optional extensions
+    - [ ] `GL_ARB_multitexture`
+    - [ ] `GL_ARB_texture_border_clamp`
+      - [ ] Fall back to `GL_CLAMP`
+    - [ ] `GL_ARB_vertex_program`
+    - [ ] `GL_ARB_fragment_program`
+
+- [ ] **OpenGL 2.0 / OpenGL ES 2.0 / WebGL 1.0**
+  - [ ] Renderer
+  - [ ] Shader pipeline
+  - [ ] Texture handling
+  - [ ] Buffer management
+
+- [ ] **OpenGL 3.3 / OpenGL ES 3.0 / WebGL 2.0**
+  - [ ] Renderer
+  - [ ] Modern shader pipeline
+  - [ ] VAO/VBO handling
+  - [ ] Framebuffers
+  - [ ] Instancing
+
+#### Direct3D
+
+- [ ] **Direct3D 7 / 8**
+  - [ ] Windows backend
+  - [ ] XDK backend
+  - [ ] Capability detection
+  - [ ] Fixed-function rendering
+
+- [ ] **Direct3D 11**
+  - [ ] Windows backend
+  - [ ] GDK backend
+  - [ ] Shader pipeline
+  - [ ] Resource management
+
+#### Console / Embedded Rendering
+
+- [ ] **XGU / PBKit**
+  - [ ] NXDK backend
+
+-
