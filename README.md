@@ -1,5 +1,7 @@
 # QuantumSrc
 
+![Thumbnail](/internal/thumbnail.png)
+
 **QuantumSrc** is a cross-platform game engine focused on portability, low-level rendering, custom asset formats, and support for both modern and legacy gaming hardware.
 
 The engine is designed around a modular architecture, allowing the same core systems to be adapted to a wide range of graphics APIs, consoles, and platforms. Rendering backends can target APIs such as OpenGL and Direct3D, while platform-specific backends can support hardware such as the Dreamcast, PlayStation 2, Nintendo GameCube/Wii, Nintendo 3DS, and other specialized targets.
