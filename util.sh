@@ -1,81 +1,86 @@
-if [ -z "${UTIL_SH+x}" ]; then
+```perl
+#!/usr/bin/env perl
 
-UTIL_SH=''
+use strict;
+use warnings;
+use File::Find;
+use File::Copy qw(copy);
+use Digest::SHA qw(sha256_hex);
+use Getopt::Long qw(GetOptions);
 
-I=$'\e[0m\e[1m\e[37m[\e[36mi\e[37m]\e[0m'
-E=$'\e[0m\e[1m\e[37m[\e[31mX\e[37m]\e[0m'
-Q=$'\001\e[0m\e[1m\e[37m\002[\001\e[32m\002?\001\e[37m\002]\001\e[0m\002'
-H=$'\e[0m\e[1m\e[37m[\e[34m-\e[37m]\e[0m'
-T=$'\e[0m\e[1m\e[33m>>>\e[0m'
-TB=$'\e[0m\e[1m\e[37m'
-TR=$'\e[0m'
-TBQ=$'\001\e[1m\e[37m\002'
-TRQ=$'\001\e[0m\002'
-inf() { printf "${I} ${TB}%s${TR}%s\n" "${@}"; }
-err() { printf "${E} ${TB}%s${TR}%s\n" "${@}"; }
-qry() { printf "${Q} ${TB}%s${TR}%s\n" "${@}"; }
-tsk() { printf "${T} ${TB}%s${TR}%s\n" "${@}"; }
+my $command = '';
+my $path    = '.';
+my $target  = '';
+my $pattern = '';
 
-PLATNAME="$(uname -s)"
-PLATARCH="$(uname -m)"
-PLATDESC="${PLATNAME} ${PLATARCH}"
-PLATNAME32="$(i386 uname -s)"
-PLATARCH32="$(i386 uname -m)"
-PLATDESC32="${PLATNAME32} ${PLATARCH32}"
+GetOptions(
+    'command=s' => \$command,
+    'path=s'    => \$path,
+    'target=s'  => \$target,
+    'pattern=s' => \$pattern,
+) or die usage();
 
-ask() {
-    read -e -p "${Q} ${TBQ}${1}${TRQ} ${TBQ}>${TRQ} " -i "${3}" -- "${2}"
-}
-ask_multiline() {
-    read -e -p "${Q} ${TBQ}${1}${TRQ} (press Ctrl+D when done) ${TBQ}>${TRQ} " -i "${3}" -- "${2}"
-    if [ "${?}" -eq 0 ]; then
-        local TMP
-        while true; do
-            read -e -p '> ' TMP
-            [ "${?}" -ne 0 ] && break
-            eval "${2}=\"\$${2}\"\$'\n'\"\${TMP}\""
-        done
-    fi
-}
-pause() {
-    printf "${H} ${TB}Press enter to continue...${TR}"
-    read -s
-    echo
-}
-_exit() {
-    local ERR="${?}"
-    [[ ${#} -eq 0 ]] || local ERR="${1}"
-    err "Error ${ERR}"
-    exit "${ERR}"
+sub usage {
+    return <<'USAGE';
+Game Engine Utility
+
+Usage:
+    perl util.pl --command list   --path assets
+    perl util.pl --command find   --path assets --pattern "\.png$"
+    perl util.pl --command hash   --path assets
+    perl util.pl --command copy   --path assets --target backup
+
+Commands:
+    list    List all files under a directory
+    find    Find files matching a regex
+    hash    Print SHA-256 hashes of files
+    copy    Copy files to a target directory
+
+Options:
+    --path      Source directory
+    --target    Destination directory
+    --pattern   Regular expression for find
+USAGE
 }
 
-_tar() {
-    rm -f -- "${1}.tar.gz"
-    tar --transform 's/.*\///g' -c -f - -- "${@:2}" | gzip -9 > "${1}.tar.gz"
-}
-_zip() {
-    rm -f -- "${1}.zip"
-    zip -qjr9 "./${1}.zip" -- "${@:2}"
-}
-_tar_u() {
-    if [[ -f "${1}" ]]; then
-        gzip -d "${1}.tar.gz"
-        tar --transform 's/.*\///g' -r -f "${1}.tar" "${@:2}" 1> /dev/null
-        gzip -9 "${1}.tar"
-    else
-        _tar "${@}"
-    fi
-}
-_zip_u() {
-    zip -uqjr9 "./${1}.zip" -- "${@:2}"
-}
-_tar_r() {
-    rm -f -- "${1}.tar.gz"
-    tar -c -f - -- "${@:2}" | gzip -9 > "${1}.tar.gz"
-}
-_zip_r() {
-    rm -f -- "${1}.zip"
-    zip -qr9 "./${1}.zip" -- "${@:2}"
+die usage() unless $command;
+
+sub walk_files {
+    my ($root, $callback) = @_;
+
+    find(
+        {
+            wanted => sub {
+                return unless -f $_;
+                $callback->($File::Find::name);
+            },
+            no_chdir => 1,
+        },
+        $root
+    );
 }
 
-fi
+if ($command eq 'list') {
+
+    walk_files($path, sub {
+        print "$_[0]\n";
+    });
+
+}
+elsif ($command eq 'find') {
+
+    die "Missing --pattern\n" unless $pattern;
+
+    my $regex = eval { qr/$pattern/ };
+    die "Invalid regex: $@\n" if $@;
+
+    walk_files($path, sub {
+        my ($file) = @_;
+
+        print "$file\n" if $file =~ $regex;
+    });
+
+}
+elsif ($command eq 'hash') {
+
+    walk_files($path
