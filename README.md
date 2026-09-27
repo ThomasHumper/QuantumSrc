@@ -1,283 +1,102 @@
-# QuantumSrc<img src="https://raw.githubusercontent.com/PQCraft/QUantumSrc/master/internal/engine/resources/icons/logo.png" align="right" height="120"/>
-**A WIP retro 3D game engine inspired by GoldSrc and Quake**<br>
-Progress can be found [here](TODO.md)
+# QuantumSrc
 
----
-- [Platform Support](#platform-support)
-- [How to run](#how-to-run)
-- [Building from source](#building-from-source)
+**QuantumSrc** is a cross-platform game engine focused on portability, low-level rendering, custom asset formats, and support for both modern and legacy gaming hardware.
 
----
-### Demo video
-Using [H-74](https://github.com/PQCraft/H-74), and [test_model.p3m](https://github.com/PQCraft/PQCraft/raw/master/test_model.p3m) in `games/test/`
+The engine is designed around a modular architecture, allowing the same core systems to be adapted to a wide range of graphics APIs, consoles, and platforms. Rendering backends can target APIs such as OpenGL and Direct3D, while platform-specific backends can support hardware such as the Dreamcast, PlayStation 2, Nintendo GameCube/Wii, Nintendo 3DS, and other specialized targets.
 
-https://github.com/user-attachments/assets/34b922c1-5fe6-409b-96fd-51a7227429c0
+## Features
 
----
-### Platform Support
-<details open><summary><b>Supported</b></summary>
+- Cross-platform C++ engine core
+- Modular renderer architecture
+- OpenGL 1.1/2.0/3.3 support
+- OpenGL ES and WebGL targets
+- Direct3D support
+- Software rendering
+- Platform-specific renderers
+- Dreamcast PVR support
+- PlayStation 2 GSKit support
+- GameCube/Wii GX support
+- Nintendo 3DS Citro3D support
+- Xbox/NXDK rendering support
+- Hardware-accelerated and software audio paths
+- OpenAL audio support
+- Custom PAF and PKD asset formats
+- LZ4 and other compression support
+- libschrift font rasterization
+- STB image loading
+- Custom map, model, texture, and material pipelines
+- PBASIC scripting support
+- Physics system
+- Keyboard, mouse, controller, and touch input
+- UI framework
+- Client/server networking
+- Built-in dedicated server support
+- Cross-platform asset and development tools
+- Blender integration
+- PTM music tracker
+- PAF archive tools
+- PTF image conversion tools
 
-- Linux
-- OpenBSD
-- Windows 2000+
-- Windows 98
-- MacOS
-- HaikuOS
-- Emscripten
-</details>
-<details open><summary><b>Untested</b></summary>
+## Architecture
 
-- FreeBSD
-- NetBSD
-- Windows 95
-</details>
-<details><summary><b>In progress</b></summary>
+QuantumSrc separates the engine into several independent subsystems:
 
-- Xbox \(NXDK\)
-    - Needs an XGU renderer
-- Dreamcast
-    - Needs a PowerVR renderer
-- 3DS
-    - Needs a Citro3D renderer
-- GameCube
-    - Needs a GX renderer
-- Wii
-    - Needs a GX renderer
-- PS2
-    - Needs a GSKit renderer
-- Android
-    - Need to finish the touch UI
-    - Needs a GLES 3.0 renderer
-</details>
-<details><summary><b>Wanted</b></summary>
-
-- UWP/GameSDK
-    - Needs a D3D 9 renderer
-- PSP
-- PS Vita
-- Switch
-</details>
-<details><summary><b>Maybe</b></summary>
-
-- Xbox \(XDK\)
-    - Needs a D3D 7/8 renderer
-- N64
-- MSDOS
-- TI-Nspire CX
-- AmigaOS
-</details>
-
----
-### How to run
-<details open><summary><b>Running the engine</b></summary>
-
-1. Download a game \(the engine will not run without a game\)
-    - [H-74](https://github.com/PQCraft/H-74)
-2. Drop the game into a directory called `games` and use the `-game` option, or ensure the `defaultgame` variable in `internal/engine/config.cfg` is set to the game's directory name
-3. Put any mods into a directory called `mods` and use the `-mods` option, or ensure they are listed in the `mods` variable in one of the configs
-    - You can use `config.cfg` in `internal/engine/` or in the game's user data directory
-    - Mods are listed as comma-separated values without spaces between values
-4. Run the executable
-</details>
-
----
-### Building from source
-<details><summary><b>Building on Unix-like platforms for that same platform</b></summary>
-
-- Install GNU Make
-- Install GCC with GNU Binutils, or Clang with LLVM
-    - Pass `TOOLCHAIN=llvm- CC=clang` to the Makefile to use Clang
-    - On 32-bit HaikuOS, pass `CC=gcc-x86` to the Makefile to use the correct GCC executable
-- Install SDL 2.x or 1.2.x
-- If building the dedicated server, pass `MODULE=server` to the Makefile, or if building the editor, pass `MODULE=editor`
-</details>
-<details><summary><b>Building for Windows</b></summary>
-
-- If cross-compiling on a Unix-like platform
-    - Install GNU Make
-    - Install MinGW
-    - Install MinGW SDL 2.x or 1.2.x
-    - Pass `CROSS=win32` to the Makefile
-- If MSYS2 is supported
-    - Install MSYS2 and use the MINGW64 backend
-    - Install GNU Make
-    - Install GCC with GNU Binutils, or Clang with LLVM
-        - Pass `TOOLCHAIN=llvm- CC=clang` to the Makefile to use Clang
-    - Install MinGW SDL 2.x or 1.2.x
-- If MSYS2 is not supported
-    - Install Git bash
-    - Install [Make for Windows](https://sourceforge.net/projects/gnuwin32/files/make/3.81/make-3.81.exe/download) and add it to the `PATH`
-    - Download MinGW and add it to the `PATH`
-    - Donwload and extract MinGW SDL 2.x or 1.2.x into MinGW
-- If building the dedicated server, pass `MODULE=server` to the Makefile, or if building the editor, pass `MODULE=editor`
-</details>
-<details><summary><b>Building for older Windows</b></summary>
-
-- Download [MinGW 7.1.0 win32 sjlj](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/7.1.0/threads-win32/sjlj/i686-7.1.0-release-win32-sjlj-rt_v5-rev2.7z/download) and add it to the `PATH`
-    - It might work with other versions but they need to not require `___mb_cur_max_func` from msvcrt.dll or `AddVectoredExceptionHandler` from kernel32.dll
-- If cross-compiling on a Unix-like platform
-    - Install Wine
-    - Pass `CROSS=win32 TOOLCHAIN='wine '` to the Makefile
-- If bulding for Windows 2000
-    - Download [psrc-sdl2 MinGW 7.1.0 build](https://github.com/PQCraft/psrc-sdl2/releases/latest/download/SDL2-devel-2.29.0-mingw-7.1.0.zip), and extract it to `external/Windows_i686`
-- If building for Windows 98
-    - Download [SDL 1.2.x modified to be compatible with Windows 98](https://github.com/PQCraft/PQCraft/raw/master/SDL_1_2_Win98.zip), and extract it to `external/Windows_i686`
-    - Pass `USESDL1=y MT=1` to the Makefile
-- If building the dedicated server, pass `MODULE=server` to the Makefile, or if building the editor, pass `MODULE=editor`
-</details>
-<details><summary><b>Building for web browsers using Emscripten</b></summary>
-
-- Install GNU Make
-- Install Emscripten
-- Pass `CROSS=emscr` to the Makefile
-</details>
-<details><summary><b>Building for the Xbox using the NXDK</b></summary>
-
-- Set up the [NXDK](https://github.com/XboxDev/nxdk)
-    - [The modified CXBE from PR #655 is needed](https://github.com/PQCraft/nxdk/tree/master/tools/cxbe)
-    - [The extract-xiso symlink fixes are recommended](https://github.com/PQCraft/extract-xiso)
-    - [See here for NXDK's dependencies](https://github.com/XboxDev/nxdk/wiki/Install-the-Prerequisites)
-- Set up [XGU](https://github.com/dracc/xgu)
-    1. Go to the NXDK directory
-    2. Go into the `lib/` directory
-    3. Clone XGU into an `xgu/` directory
-- Set up the `xiso` directory
-    1. Create a directory called `xiso`
-    2. Copy \(or symlink\) the `internal` directory into `xiso/`
-    3. Copy \(or symlink\) the games and/or mods you want to include in the disc image
-        - There should be a directory \(or link\) called `games`, and if you have mods, a directory \(or link\) called `mods`
-- Pass `CROSS=nxdk` to the Makefile
-</details>
-<details><summary><b>Building for the Dreamcast using KallistiOS</b></summary>
-
-- Set up [KallistiOS](http://gamedev.allusion.net/softprj/kos)
-    - See [this wiki page](https://dreamcast.wiki/Getting_Started_with_Dreamcast_development) for a tutorial
-- Set up [img4dc](https://github.com/Kazade/img4dc)
-    1. Go into the KallistiOS directory
-    2. Go into `utils/`
-    3. Git clone `https://github.com/Kazade/img4dc`
-    4. Enter `img4dc/` and build it
-- Set up the `cdi` directory
-    1. Create a directory called `cdi`
-    2. Copy \(or symlink\) the `internal` directory into `cdi/`
-    3. Copy \(or symlink\) the games and/or mods you want to include in the disc image
-- Pass `CROSS=dc` to the Makefile
-</details>
-<!--
-<details><summary><b>Building for the PlayStation 2 using the ps2dev sdk</b></summary>
-- Set up the [ps2dev SDK](https://github.com/ps2dev/ps2dev)
-    - See [this forum post](https://www.ps2-home.com/forum/viewtopic.php?t=9488) for a tutorial
-- Pass `CROSS=ps2` to the Makefile
-</details>
--->
-
-———
-<details><summary><b>Full Makefile usage</b></summary>
-
-- Rules
-    - `build` - Build an executable or ROM
-    - `run` - Build an executable or ROM and run it
-    - `clean` - Clean up intermediate files
-    - `distclean` - Clean up intermediate and output files
-    - `externclean` - Clean up external tools
-- Variables
-    - Build options
-        - `MODULE` - Which module to build \(default is `engine`\)
-            - `engine` - Game engine
-            - `server` - Standalone server
-            - `editor` - Map editor
-        - `CROSS` - Cross compile
-            - `win32` - Windows 2000+ or Windows 98 with KernelEx
-            - `android` - Android
-            - `emscr` - Emscripten
-            - `nxdk` - Xbox using the NXDK
-            - `dc` - Dreamcast using KallistiOS
-            <!--
-            - `ps2` - PS2 using ps2dev
-            - `3ds` - 3DS using devkitPro
-            - `wii` - PS2 using devkitPro
-            - `gc` - PS2 using devkitPro
-            -->
-        - `ONLYBIN` - Set to `y` to skip making a disc image.
-        - `O` - Set the optimization level \(default is `2` if `DEBUG` is unset or `g` if `DEBUG` is set\)
-        - `M32` - Set to `y` to produce a 32-bit binary
-        - `NATIVE` - Set to `y` to tune the build for the native system
-        - `DEBUG` - Enable debug symbols and messages
-            - `0` - Symbols only
-            - `1` - Basic messages
-            - `2` - Advanced messages
-            - `3` - Detailed messages
-        - `ASAN` - Set to `y` to enable the address sanitizer \(requires `DEBUG` to be set\)
-        - `NOSTRIP` - Set to `y` to not strip symbols
-        - `NOLTO` - Set to `y` to disable link-time optimization \(ignored if `DEBUG` is set\)
-        - `NOGCSECTIONS` - Set to `y` to disable `-Wl,--gc-sections` \(ignored if `DEBUG` is set\)
-        - `NOFASTMATH` - Set to `y` to disable `-ffast-math`
-        - `NOSIMD` - Set to `y` to not use SIMD
-        - `MT` - Set the amount of multithreading to use
-            - `0` - Disabled
-            - `1` - Limited
-            - `2` - Full
-    - Features and backends
-        - `USESTDIODS` - Set to `y` to use `fopen()`, `fread()`, and `fclose()` in place of `open()`, `read()`, and `close()` in the datastream code
-        - `USESDLDS` - Set to `y` to use SDL_RWops functions in place of `open()`, `read()`, and `close()` in the datastream code
-        - `USEDISCORDGAMESDK` - Set to `y` to include the Discord Game SDK
-        - `USEGL` - Set to `y` to include OpenGL support
-        - `USEGL11` - Set to `y` to include OpenGL 1.1 support
-        - `USEGL33` - Set to `y` to include OpenGL 3.3 support
-        - `USEGLES30` - Set to `y` to include OpenGL ES 3.0 support
-        - `USEGLAD` - Set to `y` to use glad instead of the system's GL library directly
-        - `USEWEAKGL` - Set to `y` to mark `gl[A-Z]*` symbols as weak
-        - `USESDL1` - Set to `y` to use SDL 1.2.x instead of SDL 2.x
-        - `USESTATICSDL` - Set to `y` to statically link to SDL
-        - `USEMINIMP3` - Set to `y` to include MiniMP3 for MP3 support
-        - `USESTBVORBIS` - Set to `y` to include stb_vorbis for OGG Vorbis support
-        - `USESTDTHREAD` - Set to `y` to use C11 threads
-        - Windows
-            - `USEWINPTHREAD` - Set to `y` to use winpthread instead of win32 threads
-    - Toolchain options
-        - `CC` - C compiler
-        - `LD` - Linker \(defaults to `CC`'s value\)
-        - `AR` - Archiver
-        - `STRIP` - Symbol remover
-        - `OBJCOPY` - Executable editor
-        - `TOOLCHAIN` - Text to prepend to tool names
-        - `CFLAGS` - Extra C compiler flags
-        - `CPPFLAGS` - Extra C preprocessor flags
-        - `LDFLAGS` - Extra linker flags
-        - `LDLIBS` - Extra linker libraries
-        - `RUNFLAGS` - Flags to pass to the executable
-        - `EMULATOR` - Command used to run the executable or ROM
-        - `EMUFLAGS` - Flags to pass to the emulator
-        - `EMUPATHFLAG` - Flag used to specify the executable or ROM path
-        - Windows
-            - `WINDRES` - Windows resource compiler
-        - Emscripten
-            - `EMSCR_SHELL` - Path to the shell file
-        - NXDK
-            - `XBE_TITLE` - XBE title and XISO name \(default is `QUantumSrc`\)
-            - `XBE_TITLEID` - XBE title ID \(default is `PQ-001`\)
-            - `XBE_VERSION` - XBE version \(default is taken from `version.h`\)
-            - `XBE_XTIMAGE` - Path to XPR image \(default is `icons/engine.xpr`\)
-            - `XISO` - Path to write XISO to \(default is `$(OUTDIR)/$(XBE_TITLE).xiso.iso`\)
-            - `XISODIR` - Path to make the XISO from \(default is `$(OUTDIR)/xiso`\)
-        - Dreamcast
-            - `IP_TITLE` - IP.BIN title and CDI name \(default is `QUantumSrc`\)
-            - `IP_COMPANY` - IP.BIN company name \(default is `PQCraft`\)
-            - `IP_MRIMAGE` - Path to MR image \(default is `icons/engine.mr`\)
-            - `CDI` - Path to write CDI to \(default is `$(OUTDIR)/$(IP_TITLE).cdi`\)
-            - `CDIDIR` - Path to make the CDI from \(default is `$(OUTDIR)/cdi`\)
-</details>
-
-Examples:
+```text
+                         QuantumSrc
+                              │
+          ┌───────────────────┼───────────────────┐
+          │                   │                   │
+        Core               Rendering            Audio
+          │                   │                   │
+      ┌───┼───┐        ┌─────┼─────┐        ┌────┼────┐
+      │   │   │        │     │     │        │    │    │
+   Files  UI Input    OpenGL D3D  Software  OpenAL AICA
+      │
+   ┌──┴───────────────┐
+   │                  │
+  PAF                PKD
+   │                  │
+ Asset/Archive      Database
 ```
-make -j$(nproc)
+
+The renderer and platform layers are intentionally separated from the engine core so that platform-specific implementations can be added without rewriting gameplay, asset management, networking, or other core systems.
+
+## Asset Pipeline
+
+QuantumSrc uses a custom asset pipeline designed around the project's native formats and development tools.
+
+```text
+Blender
+   │
+   ├── P3M
+   ├── PTF
+   └── Map/Project data
+          │
+          ▼
+       Tools
+          │
+     ┌────┼────┐
+     │    │    │
+    PAF  PKD  PMF
+     │    │    │
+     └────┼────┘
+          ▼
+       QuantumSrc
 ```
-```
-make -j$(nproc) run
-```
-```
-make DEBUG=1 ASAN=y -j$(nproc) run
-```
-```
-make CROSS=nxdk DEBUG=0 -j$(nproc) run
-```
+
+The tooling ecosystem includes Blender plugins, archive utilities, image conversion tools, music tools, syntax definitions, and platform-specific project templates.
+
+## Design Goals
+
+QuantumSrc is intended to make it possible to develop a game once while retaining control over the platform-specific portions of the engine.
+
+The primary goals are:
+
+- **Portability** — support a broad range of platforms and graphics hardware.
+- **Modularity** — keep platform implementations isolated from engine systems.
+- **Low-level control** — expose the capabilities of each target rather than requiring every platform to behave identically.
+- **Custom formats** — provide efficient formats for distributing and loading game data.
+- **Tooling** — maintain a complete workflow from content creation to the final game build.
+- **Longevity** — avoid making the engine dependent on a single graphics API, operating system, or hardware generation.
+
+QuantumSrc is ultimately intended to serve as both a modern cross-platform engine and a framework for experimenting with rendering, audio, asset formats, and game development across generations of hardware.
