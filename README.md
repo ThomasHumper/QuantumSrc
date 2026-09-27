@@ -1,4 +1,4 @@
-# PlatinumSrc<img src="https://raw.githubusercontent.com/PQCraft/PlatinumSrc/master/internal/engine/resources/icons/logo.png" align="right" height="120"/>
+# QuantumSrc<img src="https://raw.githubusercontent.com/PQCraft/QUantumSrc/master/internal/engine/resources/icons/logo.png" align="right" height="120"/>
 **A WIP retro 3D game engine inspired by GoldSrc and Quake**<br>
 Progress can be found [here](TODO.md)
 
@@ -254,14 +254,14 @@ https://github.com/user-attachments/assets/34b922c1-5fe6-409b-96fd-51a7227429c0
         - Emscripten
             - `EMSCR_SHELL` - Path to the shell file
         - NXDK
-            - `XBE_TITLE` - XBE title and XISO name \(default is `PlatinumSrc`\)
+            - `XBE_TITLE` - XBE title and XISO name \(default is `QUantumSrc`\)
             - `XBE_TITLEID` - XBE title ID \(default is `PQ-001`\)
             - `XBE_VERSION` - XBE version \(default is taken from `version.h`\)
             - `XBE_XTIMAGE` - Path to XPR image \(default is `icons/engine.xpr`\)
             - `XISO` - Path to write XISO to \(default is `$(OUTDIR)/$(XBE_TITLE).xiso.iso`\)
             - `XISODIR` - Path to make the XISO from \(default is `$(OUTDIR)/xiso`\)
         - Dreamcast
-            - `IP_TITLE` - IP.BIN title and CDI name \(default is `PlatinumSrc`\)
+            - `IP_TITLE` - IP.BIN title and CDI name \(default is `QUantumSrc`\)
             - `IP_COMPANY` - IP.BIN company name \(default is `PQCraft`\)
             - `IP_MRIMAGE` - Path to MR image \(default is `icons/engine.mr`\)
             - `CDI` - Path to write CDI to \(default is `$(OUTDIR)/$(IP_TITLE).cdi`\)
